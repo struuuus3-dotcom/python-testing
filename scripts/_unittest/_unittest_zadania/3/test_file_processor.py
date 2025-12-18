@@ -6,7 +6,8 @@ from file_processor import FileProcessor
 class TestFileProcessor(unittest.TestCase):
 
     def setUp(self):
-        pass  # TODO: Create mock file handler and processor instance
+        self.mock_handler = Mock()
+        self.processor = FileProcessor(self.mock_handler)
 
     def test_process_text_converts_to_uppercase(self):
         """Test that process_text converts content to uppercase."""
@@ -22,7 +23,11 @@ class TestFileProcessor(unittest.TestCase):
 
     def test_save_data_calls_write_with_correct_args(self):
         """Test that save_data calls write() with filename and data."""
-        assert False  # TODO: Test handler.write() called with ("output.txt", "test data")
+
+        self.processor.save_data("output.txt", "content")
+
+        self.mock_handler.write.assert_called_with("output.txt", "content")
+
 
     def test_copy_file_reads_and_writes(self):
         """Test that copy_file reads source and writes to destination."""
